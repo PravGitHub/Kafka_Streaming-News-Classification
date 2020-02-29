@@ -12,12 +12,9 @@ from pyspark.ml.evaluation import MulticlassClassificationEvaluator
 if __name__ == "__main__":
     sc = SparkContext.getOrCreate()
     sc.setLogLevel("ERROR")
-    data = sc.textFile("/home/asdf/Documents/news", 1)
-    data = data.map(lambda l: l.strip('"')).map(lambda l: l.split("||")).map(lambda l: (int(l[0]),l[1]))
-
+    
     sqlContext = SQLContext(sc)
-    df = sqlContext.createDataFrame(data, schema=["label", "text"])
-
+    
     regex_tokenizer = RegexTokenizer(inputCol="text", outputCol="words", pattern="\\W")
 
     stop_words = []
